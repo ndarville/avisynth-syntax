@@ -106,7 +106,7 @@ contexts:
             (?x)
             ==     |
             !=     |
-            <>     |
+            <>
           scope: keyword.operator.comparison
         - match: |
             \s\?\s | # Shorthand if
