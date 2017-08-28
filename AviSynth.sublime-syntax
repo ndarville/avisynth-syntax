@@ -1,0 +1,203 @@
+%YAML 1.2
+---
+name: Avisynth
+file_extensions:
+    - avs
+    - avsi
+scope: source.avisynth
+
+# [A-Za-z0-9_]: Alphanumeric and underscore
+# \w: Alphanumeric with non-ASCII characters
+# \s: Whitespace
+# Word: \bfoo\b
+# Either: foo|bar
+# /s: Whitespace
+# ?: Zero or once
+# *: Zero or more
+# +: Once or more
+# .: Any character
+# (): Capture group
+# []: Character group
+# ^: Start of string
+# $: End of string
+
+contexts:
+    main:
+        - include: statements
+
+    statements:
+        - include: comments
+        - include: escape
+        - include: functions
+        - include: operators
+        - include: properties
+        - include: source_filters
+        - include: strings
+        - include: variables
+
+    comments:
+        - match: "#"
+          push:
+            - meta_scope: comment.line.avisynth
+            - match: \n
+              pop: true
+        - match: \/\*
+          push:
+            - meta_scope: comment.block.avisynth
+            - match: \*\/
+              pop: true
+    escape:
+        - match: \\\n
+          scope: constant.character.escape.avisynth
+    functions:
+        - name: Function keywords
+          match: (?x) Function|function|define|return
+          scope: keyword.avisynth
+    #   - name: TODO
+    #     match: "\([Function|function])\s(\w+)\(*\)\s?({)"
+    #     captures:
+    #       1: keyword.avisynth
+    #       2: entity.name.function.avisynth
+    #       4: punctuation.section.brackets.begin
+    #     push:
+    #       - match: }
+    #         pop: true
+        - name: Built-in functions # From wiki
+          match: |
+            (?x)
+            Abs|Apply|Assert|AssertEval
+            catch|Ceil|Cos|
+            Default|Defined|
+            Eval|Exist|Exp|
+            Findstr|Float|Floor|Frac|Function
+            HexValue|
+            Import|Int|IsBool|IsClip|IsFloat|IsInt|IsString|
+            LCase|LeftStr|Log|LoadPlugin|LoadVirtualDubPlugin|LoadVFAPIPlugin|
+            MidStr|
+            NOP|
+            Pi|Pow|
+            Rand|Round|RevStr|
+            Select|SetMemoryMax|SetWorkingDir|Sign|Sin|Sqrt|StrLen|String|
+            Try|
+            UCase|
+            Value|VersionNumber|VersionString
+          scope: entity.name.function.avisynth
+        - name: FFM2S functions # Mia FFMS2.avsi
+          match: \b(FFFormatTime|FFColorSpace|FFColorRange|FFCropping|FFSampAR|FFPictType|FFInfo)\b
+          scope: entity.name.function.avisynth
+        - name: Additional functions # Missing functinos
+          match: \b(FFmpegSource2|Superimpose)\b
+          scope: entity.name.function.avisynth
+    operators:
+        - match: |
+            (?x)
+            ==     |
+            !=     |
+            <>     |
+          scope: keyword.operator.comparison
+        - match: |
+            \s\?\s | # Shorthand if
+            \s:\s    # Shorthand then
+          scope: keyword.control.conditional.avisynth
+        - match: |
+            (?x)
+            >= |
+            <= |
+            <  |
+            >
+          scope: keyword.operator.relational.avisynth
+        - match: |
+            (?x)
+            \+   | # Addition
+            \+\+ |
+            -    | # Subtraction
+            \*   | # Multiplication
+            /    | # Division
+            %      # Modulo
+          scope: keyword.operator.arithmetic.avisynth
+        - match: |
+            (?x)
+            \&\& | # And
+            \|\|   # Or
+          scope: keyword.operator.logical.avisynth
+    properties: # From wiki
+        - match: |
+            (?x)
+            Audiobits |
+            Audiochannels |
+            Audiolength |
+            Audiorate |
+            Framecount |
+            Framerate |
+            GetParity |
+            Height |
+            IsFieldBased |
+            IsFrameBased |
+            IsRGB |
+            IsRGB24 |
+            IsRGB32 |
+            IsYUY2 |
+            Width
+          scope: entity.name.function.avisynth
+    source_filters: # From wiki
+        - match: |
+            (?x)
+            AddBorders|AddBorders||AlignedSplice|Amplify|AmplifydB|Animate|AssumeBFF|AssumeFieldBased|AssumeFPS|AssumeFrameBased|AssumeSampleRate|AssumeTFF|AudioDub|AVIFileSource|AVISource|
+            BicubicResize|BilinearResize|Blackness|BlankClip|Blur|Bob|
+            ChangeFPS|ColorBars|ColorKeyMask|ColorYUV|Compare|ComplementParity|ConvertAudioTo16bit|ConvertAudioTo24bit|ConvertAudioTo32bit|ConvertAudioTo8bit|ConvertAudioToFloat|ConvertBackToYUY2|ConvertFPS|ConvertToBackYUY2|ConvertToMono|ConvertToRGB|ConvertToRGB24|ConvertToRGB32|ConvertToYUY2|ConvertToYV12|Crop|CropBottom|
+            DelayAudio|DeleteFrame|DirectShowSource|Dissolve|DoubleWeave|DuplicateFrame|
+            EnsureVBRMP3Sync|
+            FadeIn|FadeIn2|FadeIO|FadeIO2|FadeOut|FadeOut2|FixBrokenChromaUpsampling|FixLuminance|FlipHorizontal|FlipVertical|FreezeFrame|
+            GeneralConvolution|GetChannel|Greyscale|
+            Histogram|HorizontalReduceBy2|
+            Info|Interleave|
+            KillAudio|
+            LanczosResize|Layer|Letterbox|Levels|Limiter|Loop|
+            Mask|MergeChannels|MergeChroma|MergeLuma|MessageClip|MixAudio|MPEG2Source|MPEGSource|
+            Normalize|
+            OpenDMLSource|
+            PeculiarBlend|PointResize|Pulldown|
+            ReduceBy2|ResampleAudio|ResetMask|Reverse|RGBAdjust|
+            SegmentedAVISource|SegmentedDirectShowSource|SelectEven|SelectEvery|SelectOdd|SelectRangeEvery|SeparateFields|Sharpen|ShowFiveVersions|ShowFrameNumber|ShowSMPTE|SpatialSoften|StackHorizontal|StackVertical|Subtitle|Subtract|SwapFields|SwapUV|
+            TemporalSoften|Trim|Tweak|
+            UnalignedSplice|UToY|
+            Version|VerticalReduceBy2|VToY|
+            WAVSource|Weave|
+            YToUV
+          scope: entity.name.function.avisynth
+    strings:
+        - match: '"""'
+          name: TODO
+          push:
+            - match: '"""'
+              pop: true
+        - match: '"'
+          scope: punctuation.definition.string.begin.avisynth
+          push:
+            - meta_scope: string.quoted.double.avisynth
+            - match: '"'
+              scope: punctuation.definition.string.end.avisynth
+              pop: true
+        - match: "'"
+          scope: punctuation.definition.string.begin.avisynth
+          push:
+            - meta_scope: string.quoted.single.avisynth
+            - match: '"'
+              scope: punctuation.definition.string.end.avisynth
+              pop: true
+    variables:
+        # False positive for ==
+        - match: |
+            (?x)
+            ([A-Za-z0-9_]+)             # Variable name
+            \s*(=)\s*                   # Assignment operator w/ and w/o whitespace
+            (
+                \"[A-Za-z0-9_\s\-]*\" | # Regular value with double quotes, whitespace, and dashes
+                \'[A-Za-z0-9_\s\-]*\' | # Regular value with single quotes, whitespace, and dashes
+               \$?[A-Za-z0-9_]*         # Alphanumeric value with underscore, optional hex $
+            )
+          captures:
+            1: variable.avisynth
+            2: keyword.operator.assignment.avisynth
+        - match: "="
+          scope: keyword.operator.assignment.avisynth
