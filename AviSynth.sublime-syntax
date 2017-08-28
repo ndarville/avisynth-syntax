@@ -64,7 +64,7 @@ contexts:
             2: constant.numeric.hex.avisynth
     functions:
         - name: Function keywords
-          match: (?x) Function|function|define|return
+          match: \b(Function|function|define|return)\b
           scope: keyword.avisynth
     #   - name: TODO
     #     match: "\([Function|function])\s(\w+)\(*\)\s?({)"
