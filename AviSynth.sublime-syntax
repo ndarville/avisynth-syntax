@@ -8,6 +8,7 @@ scope: source.avisynth
 
 # [A-Za-z0-9_]: Alphanumeric and underscore
 # \w: Alphanumeric with non-ASCII characters
+# \h: Hex
 # \s: Whitespace
 # Word: \bfoo\b
 # Either: foo|bar
@@ -28,6 +29,7 @@ contexts:
     statements:
         - include: comments
         - include: escape
+        - include: hexcodes
         - include: functions
         - include: operators
         - include: properties
@@ -49,6 +51,17 @@ contexts:
     escape:
         - match: \\\n
           scope: constant.character.escape.avisynth
+    hexcodes:
+        - match: |
+            (?x)
+            (\$)
+            (
+                [A-Fa-f0-9]{3}
+                {1,2}
+            )
+          captures:
+            1: punctuation.definition constant.numeric.hex.avisynth
+            2: constant.numeric.hex.avisynth
     functions:
         - name: Function keywords
           match: (?x) Function|function|define|return
@@ -194,7 +207,7 @@ contexts:
             (
                 \"[A-Za-z0-9_\s\-]*\" | # Regular value with double quotes, whitespace, and dashes
                 \'[A-Za-z0-9_\s\-]*\' | # Regular value with single quotes, whitespace, and dashes
-               \$?[A-Za-z0-9_]*         # Alphanumeric value with underscore, optional hex $
+                  [A-Za-z0-9_]*         # Alphanumeric value with underscore
             )
           captures:
             1: variable.avisynth
