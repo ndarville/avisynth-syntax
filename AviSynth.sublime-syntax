@@ -66,6 +66,9 @@ contexts:
         - name: Function keywords
           match: \b(Function|function|define|return)\b
           scope: keyword.avisynth
+        - name: Types
+          match: \b(clip|string|int|float|bool)\b
+          scope: storage.type.primitive.avisynth
     #   - name: TODO
     #     match: "\([Function|function])\s(\w+)\(*\)\s?({)"
     #     captures:
