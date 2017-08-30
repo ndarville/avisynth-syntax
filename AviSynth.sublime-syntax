@@ -203,7 +203,7 @@ contexts:
               scope: punctuation.definition.string.end.avisynth
               pop: true
     variables:
-        # False positive for ==
+        # False positive for foo==bar, not foo == bar
         - match: |
             (?x)
             ([A-Za-z0-9_]+)             # Variable name
