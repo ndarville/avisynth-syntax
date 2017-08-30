@@ -112,6 +112,7 @@ contexts:
             <>
           scope: keyword.operator.comparison
         - match: |
+            (?x)
             \s\?\s | # Shorthand if
             \s:\s    # Shorthand then
           scope: keyword.control.conditional.avisynth
