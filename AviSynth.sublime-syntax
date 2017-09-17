@@ -169,7 +169,7 @@ contexts:
             Histogram|HorizontalReduceBy2|
             Info|Interleave|
             KillAudio|
-            LanczosResize|Layer|Letterbox|Levels|Limiter|Loop|
+            LanczosResize|Lanczos4Resize|Layer|Letterbox|Levels|Limiter|Loop|
             Mask|MergeChannels|MergeChroma|MergeLuma|MessageClip|MixAudio|MPEG2Source|MPEGSource|
             Normalize|
             OpenDMLSource|
