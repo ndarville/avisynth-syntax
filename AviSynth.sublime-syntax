@@ -140,12 +140,12 @@ contexts:
     properties: # From wiki
         - match: |
             (?x)
-            Audiobits |
-            Audiochannels |
-            Audiolength |
-            Audiorate |
-            Framecount |
-            Framerate |
+            AudioBits |
+            AudioChannels |
+            AudioLength |
+            AudioRate |
+            FrameCount |
+            FrameRate |
             GetParity |
             Height |
             IsFieldBased |
@@ -154,6 +154,7 @@ contexts:
             IsRGB24 |
             IsRGB32 |
             IsYUY2 |
+            PixelType |
             Width
           scope: entity.name.function.avisynth
     source_filters: # From wiki
