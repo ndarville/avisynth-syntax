@@ -140,23 +140,24 @@ contexts:
     properties: # From wiki
         - match: |
             (?x)
-            AudioBits |
-            AudioChannels |
-            AudioLength |
-            AudioRate |
-            FrameCount |
-            FrameRate |
-            GetParity |
-            Height |
-            IsFieldBased |
-            IsFrameBased |
-            IsRGB |
-            IsRGB24 |
-            IsRGB32 |
-            IsYUY2 |
-            PixelType |
-            Width
-          scope: entity.name.function.avisynth
+            (\.)(AudioBits) |
+            (\.)(AudioChannels) |
+            (\.)(AudioLength) |
+            (\.)(AudioRate) |
+            (\.)(FrameCount) |
+            (\.)(FrameRate) |
+            (\.)(GetParity) |
+            (\.)(Height) |
+            (\.)(IsFieldBased) |
+            (\.)(IsFrameBased) |
+            (\.)(IsRGB) |
+            (\.)(IsRGB24) |
+            (\.)(IsRGB32) |
+            (\.)(IsYUY2) |
+            (\.)(PixelType) |
+            (\.)(Width)
+          captures:
+            2: entity.name.function.avisynth
     source_filters: # From wiki
         - match: |
             (?x)
